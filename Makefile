@@ -12,16 +12,13 @@ OBJS := $(SRCS:%.c=%.o)
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	@echo "Creating libary..."
 	ar rcs ${NAME} ${OBJS}
 
-%.o: %.c
-	@echo "Checking.."
+%.o: %.c libft.h
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	@echo "Cleaning up..."
-	rm -rvf *.o ${OBJS}
+	rm -fv ${OBJS}
 
 fclean: clean
 	rm -f ${NAME}
