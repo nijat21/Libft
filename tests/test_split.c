@@ -2,8 +2,8 @@
 
 int main()
 {
-    char *str = "HelloCmf,ChowCyouCdoing?";
-    char *str1 = "      Hello        Cmf,Chow       CyouCdoing      ?";
+    char *str = "HiCbro,ChowCyouCdoing?";
+    char *str1 = "      Hi        Cbro,C      how       CyouC     doing      ?";
 
     char **res = ft_split(str, 'C');
     char **res1 = ft_split(str1, 'C');

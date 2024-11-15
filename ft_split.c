@@ -2,16 +2,14 @@
 
 static size_t count_words(char const *s, char c)
 {
-    size_t i;
     size_t in_word;
     size_t count;
 
     in_word = 0;
     count = 0;
-    i = 0;
-    while (s[i])
+    while (*s)
     {
-        if (s[i] != c)
+        if (*s != c)
         {
             if (!in_word)
             {
@@ -21,34 +19,53 @@ static size_t count_words(char const *s, char c)
         }
         else
             in_word = 0;
-        i++;
+        s++;
     }
     return count;
 }
 
-static char *copy_substring(const char *start, size_t len)
+static char *allocate_assign(char ***res, char const *start, size_t len, size_t i)
 {
-    size_t i;
+    size_t j;
 
-    char *substring = (char *)malloc((len + 1) * sizeof(char));
-    if (!substring)
-        return NULL;
-    i = 0;
-    while (start[i] && i < len)
+    j = 0;
+    (*res)[i] = (char *)malloc((len + 1) * sizeof(char));
+    if (!(*res)[i])
     {
-        substring[i] = start[i];
-        i++;
+        while ((*res)[--i])
+            free((*res)[i]);
+        free((*res));
+        return NULL;
     }
-    substring[len] = '\0';
-    return substring;
+    while (start[j] && j < len)
+    {
+        (*res)[i][j] = start[j];
+        j++;
+    }
+    (*res)[i][j] = '\0';
+    return (*res)[i];
+}
+
+static void iterate_word(char ***res, char const **s, char c, size_t *i)
+{
+    size_t len;
+    char const *start;
+
+    start = *s;
+    len = 0;
+    while (**s && **s != c)
+    {
+        len++;
+        (*s)++;
+    }
+    (*res)[*i] = allocate_assign(res, start, len, *i);
+    (*i)++;
 }
 
 char **ft_split(char const *s, char c)
 {
     char **res;
-    char const *start;
     size_t i;
-    size_t len;
 
     if (!s)
         return NULL;
@@ -60,27 +77,11 @@ char **ft_split(char const *s, char c)
     {
         if (*s != c)
         {
-            start = s;
-            len = 0;
-            while (*s && *s != c)
-            {
-                s++;
-                len++;
-            }
-            res[i] = copy_substring(start, len);
-            if (!res[i])
-            {
-                while (i > 0)
-                {
-                    free(res[--i]);
-                }
-                free(res);
-                return NULL;
-            }
-            i++;
+            iterate_word(&res, &s, c, &i);
         }
         else
             s++;
     }
+    res[i] = NULL;
     return res;
 }
