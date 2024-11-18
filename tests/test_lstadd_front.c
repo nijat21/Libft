@@ -10,4 +10,7 @@ int main()
     ft_lstadd_front(&first_node, new_node);
     printf("New node next after: %p\n", new_node->next);
     printf("First node after: %p\n", first_node);
+
+    free(first_node);
+    free(new_node);
 }
