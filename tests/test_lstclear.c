@@ -12,6 +12,11 @@ int main()
     t_list *third_node = (t_list *)malloc(sizeof(t_list));
     t_list *fourth_node = (t_list *)malloc(sizeof(t_list));
 
+    first_node->content = malloc(10);
+    second_node->content = malloc(10);
+    third_node->content = malloc(10);
+    fourth_node->content = malloc(10);
+
     first_node->next = second_node;
     second_node->next = third_node;
     third_node->next = fourth_node;
@@ -24,7 +29,6 @@ int main()
     void (*del)(void *) = free_node;
     ft_lstclear(&first_node, del);
 
-    printf("Prev node->next: %p\n", first_node->next);
-
-    free_list(first_node);
+    if (!first_node)
+        printf("List is empty\n");
 }

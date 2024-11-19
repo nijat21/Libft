@@ -6,12 +6,12 @@ void ft_lstclear(t_list **lst, void (*del)(void *))
 
     if (!lst || !del)
         return;
-    temp = *lst;
-    while (temp)
+    while (*lst)
     {
         temp = (*lst)->next;
-        printf("Freed %p\n", lst);
+        del((*lst)->content);
         free(*lst);
+        *lst = temp;
     }
     *lst = NULL;
 }
