@@ -12,14 +12,14 @@
 
 #include "libft.h"
 
-void ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
-	long num;
-	char temp;
+	long	num;
+	char	temp;
 
 	num = n;
 	if (fd < 0)
-		return;
+		return ;
 	if (num < 0)
 	{
 		write(fd, "-", 1);

@@ -1,4 +1,4 @@
-.PHONY: all bonus clean flcean re
+.PHONY: all clean flcean re
 
 NAME = libft.a
 
@@ -27,8 +27,7 @@ ${NAME}: ${OBJS}
 	@echo "Linking libft.a"
 	ar rcs ${NAME} ${OBJS}
 
-bonus: ${BONUS_OBJS}
-	@echo "Linking libft.a"
+bonus: ${NAME} ${BONUS_OBJS}
 	ar rcs ${NAME} ${BONUS_OBJS}
 	touch bonus
 
